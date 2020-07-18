@@ -1,0 +1,2 @@
+# patch-remove_unnecessary_strings
+スペースなどの表記の揺らぎを解消する
