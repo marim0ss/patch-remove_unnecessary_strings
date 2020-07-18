@@ -1,12 +1,13 @@
 const ss = SpreadsheetApp.getActiveSpreadsheet(),
     data_sheet = ss.getSheetByName('data'),
     lastRow = data_sheet.getLastRow(),
-    output_sheet = ss.getSheetByName('out_put');
+    output_sheet = ss.getSheetByName('output');
 
 const DATA_RANGE = data_sheet.getDataRange().getValues();　//見出しと同じ位置まで取得する
 
-DATA_RANGE.splice(0,5) // 先頭から5個要素を削除
-Logger.log(DATA_RANGE)
+let midashi_num = 5; // write実行時の書き込み起点の位置にも関わる
+DATA_RANGE.splice(0, midashi_num) // 先頭から5個要素を削除
+//Logger.log(DATA_RANGE)
 
 function getArray() {
   // -------------------------------------------------------------------------------------
@@ -34,7 +35,7 @@ function getArray() {
         console.log('DATA_RANGE[1][0]（1行目, 0列目）' + DATA_RANGE[1][0]) // B1の値
         console.log('DATA_RANGE[0][1]（1行目, 1列目）' + DATA_RANGE[1][1]) // B2の値
        */ 
-        console.log('----------------置換処理:行の 0つ目の要素,２つめの要素-----------------')
+        console.log('----------------置換処理-----------------')
         DATA_RANGE[i][0] = DATA_RANGE[i][0].replace(/[ 　]/g, '')         // 半角＆全角スペース、  g：1つの文字列内に複数存在した時も置き換える
         DATA_RANGE[i][2] = DATA_RANGE[i][2].replace(/[ 　]/g, '')
         console.log('----------------------------------------------------------------')       
@@ -43,13 +44,13 @@ function getArray() {
     new_data_range.push(DATA_RANGE[i]);
   }
   console.log(new_data_range)
-  writeToSheet(output_sheet,new_data_range);
+  writeToSheet(data_sheet,new_data_range);
   //Browser.msgBox("Here's  made!!", Browser.Buttons.OK);
 }
 
 
 function writeToSheet(sheet_name,data_range) {
-  sheet_name.getRange(2, 1, data_range.length, data_range[0].length).setValues(data_range);
+  sheet_name.getRange(midashi_num +1, 1, data_range.length, data_range[0].length).setValues(data_range);
 }
 
 function clearContent(){
